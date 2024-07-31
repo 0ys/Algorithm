@@ -51,18 +51,22 @@ public class Main {
 		 Move(0, W+1, 1);
 		 sb.append(DP[0][W+1]+"\n");
 		 
+//		 for(int i=0; i<W+2; i++) {
+//			 System.out.println(Arrays.toString(DP[i]));
+//		 }
+		 
 		 // 백트래킹으로 사건을 맡은 경찰차를 찾음
 		 int car1 = 0;
 		 int car2 = W+1;
 		 for(int i=1; i<=W; i++) {
-			 int nowD = distance(event[car1], event[i]);
+			 int nowD = distance(event[car2], event[i]);
 			 
-			 if(DP[car1][car2] == DP[i][car2] + nowD) {
-				 car1 = i;
-				 sb.append("1\n");
-			 } else {
+			 if(DP[car1][car2] == DP[car1][i] + nowD) {
 				 car2 = i;
 				 sb.append("2\n");
+			 } else {
+				 car1 = i;
+				 sb.append("1\n");
 			 }
 		 }
 		 
