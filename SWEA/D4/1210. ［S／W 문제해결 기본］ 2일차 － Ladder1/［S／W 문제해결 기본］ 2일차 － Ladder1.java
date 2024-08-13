@@ -36,7 +36,7 @@ public class Solution {
 			}
 			
 			// 도착지점부터 DFS 탐색을 수행
-			bw.write("#"+tc+" "+Ladder(99, end)+"\n");
+			bw.write("#"+tc+" "+Ladder2(99, end)+"\n");
 		}
 		
 		bw.flush();
@@ -44,6 +44,7 @@ public class Solution {
 		br.close();
 		
 	}
+	// BFS방식
 	static int Ladder(int x, int y) {
 		int[] dx = {0, 0, -1};
 		int[] dy = {1, -1, 0};
@@ -71,14 +72,13 @@ public class Solution {
 		}
 		return -1;
 	}
-	
+	// DFS 방식
 	static int Ladder2(int x, int y) {
 		if(x == 0) return y;
 		visited[x][y] = true;
 		
 		int[] dx = {0, 0, -1};
 		int[] dy = {1, -1, 0};
-//		System.out.println(x+", "+y);
 		
 		for(int i=0; i<3; i++) {
 			int nx = x + dx[i];
