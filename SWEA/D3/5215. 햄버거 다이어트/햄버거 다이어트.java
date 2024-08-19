@@ -1,71 +1,56 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Solution {
 	static int N, L;
-	static Ingredient[] hamburger;
-	static Ingredient[] inputs;
-	static int maxScore;
-	static class Ingredient {
+	static Element[] inputs;
+	static class Element {
 		int score, kcal;
 
-		public Ingredient(int score, int kcal) {
+		public Element(int score, int kcal) {
 			this.score = score;
 			this.kcal = kcal;
 		}
-		
 	}
-	public static void main(String[] args) throws Exception {
+	static int ans;
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringBuilder sb = new StringBuilder();
 		StringTokenizer st;
 		
 		int T = Integer.parseInt(br.readLine());
+		
 		for(int t=1; t<=T; t++) {
 			st = new StringTokenizer(br.readLine());
 			N = Integer.parseInt(st.nextToken());
 			L = Integer.parseInt(st.nextToken());
 			
-			hamburger = new Ingredient[N];
-			inputs = new Ingredient[N];
+			inputs = new Element[N];
 			for(int i=0; i<N; i++) {
 				st = new StringTokenizer(br.readLine());
 				int score = Integer.parseInt(st.nextToken());
 				int kcal = Integer.parseInt(st.nextToken());
-				inputs[i] = new Ingredient(score, kcal);
+				
+				inputs[i] = new Element(score, kcal);
 			}
 			
-			for(int R=1; R<=N; R++) {
-				combination(0, 0, R);
-			}
+			ans = 0;
+			Hamburger(0, 0, 0);
 			
-			bw.write("#"+t+" "+maxScore+"\n");
-			maxScore = 0;
+			sb.append("#"+t+" "+ans+"\n");
 		}
 		
-		bw.flush();
-		bw.close();
-		br.close();
+		System.out.println(sb.toString());
 	}
 	
-	static private void combination(int cnt, int start, int R) {
-		if(cnt == R) {
-			int totalS = 0;
-			int totalK = 0;
-			for(int idx=0; idx<R; idx++) {
-				totalS += hamburger[idx].score;
-				totalK += hamburger[idx].kcal;
-			}
-			
-			if(totalK <= L) maxScore = Math.max(maxScore, totalS);
+	static void Hamburger(int cnt, int score, int kcal) {
+		if(kcal > L) return;
+		if(cnt == N) {
+			ans = Math.max(ans, score);
 			return;
 		}
-		for(int i=start; i<N; i++) {
-			hamburger[cnt] = inputs[i];
-			combination(cnt+1, i+1, R);
-		}
+		
+		Hamburger(cnt+1, score+inputs[cnt].score, kcal+inputs[cnt].kcal);
+		Hamburger(cnt+1, score, kcal);
 	}
 }
