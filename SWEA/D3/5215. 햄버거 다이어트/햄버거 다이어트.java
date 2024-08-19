@@ -1,5 +1,8 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Solution {
 	static int N, L;
@@ -35,7 +38,25 @@ public class Solution {
 			}
 			
 			ans = 0;
-			Hamburger(0, 0, 0);
+			for(int r=1; r<=N; r++) {
+				int[] initP = new int[N];
+				for(int i=N-1; i>N-r-1; i--) {
+					initP[i] = 1;
+				}
+				do {
+					int kcal = 0;
+					int score = 0;
+					//System.out.println(Arrays.toString(initP));
+					for(int i=0; i<N; i++) {
+						if(initP[i] == 1) {
+							kcal += inputs[i].kcal;
+							score += inputs[i].score;
+						}
+					}
+					if(kcal <= L) ans = Math.max(ans, score);
+					
+				} while(np(initP));
+			}
 			
 			sb.append("#"+t+" "+ans+"\n");
 		}
@@ -43,14 +64,27 @@ public class Solution {
 		System.out.println(sb.toString());
 	}
 	
-	static void Hamburger(int cnt, int score, int kcal) {
-		if(kcal > L) return;
-		if(cnt == N) {
-			ans = Math.max(ans, score);
-			return;
+	static boolean np(int[] p) {
+		int i = N-1;
+		while(i>0 && p[i-1]>=p[i]) --i;
+		if(i == 0) return false;
+		
+		int j = N-1;
+		while(p[i-1] >= p[j]) --j;
+		
+		swap(p, i-1, j);
+		
+		int k = N-1;
+		while(i<k) {
+			swap(p, i++, k--);
 		}
 		
-		Hamburger(cnt+1, score+inputs[cnt].score, kcal+inputs[cnt].kcal);
-		Hamburger(cnt+1, score, kcal);
+		return true;
+	}
+	
+	static void swap(int[] p, int i, int j) {
+		int temp = p[i];
+		p[i] = p[j];
+		p[j] = temp;
 	}
 }
