@@ -28,7 +28,7 @@ public class Solution {
 			Arrays.sort(H);
 			isSelected = new boolean[N];
 			S=Integer.MAX_VALUE;
-			SubSet(0);
+			SubSet(0, 0);
 			
 			sb.append("#"+tc+" "+(S-B)+"\n");
 			
@@ -37,21 +37,17 @@ public class Solution {
 		System.out.println(sb.toString());
 	}
 	
-	static void SubSet(int cnt) {
+	static void SubSet(int cnt, int sum) {
 		if(cnt == N) {
-			int sum = 0;
-			for(int i=0; i<N; i++) {
-				if(isSelected[i]) sum += H[i];
-			}
 			if(sum >= B) S = Math.min(S, sum);
 			return;
 		}
 		
 		isSelected[cnt] = true;
-		SubSet(cnt+1);
+		SubSet(cnt+1, sum+H[cnt]);
 		
 		isSelected[cnt] = false;
-		SubSet(cnt+1);
+		SubSet(cnt+1, sum);
 		
 	}
 }
