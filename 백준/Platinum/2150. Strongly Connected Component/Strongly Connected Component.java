@@ -1,6 +1,40 @@
 import java.io.*;
 import java.util.*;
-
+/*
+7 9
+1 4
+4 5
+5 1
+1 6
+6 7
+2 7
+7 3
+3 7
+7 2
+stack add 1, now root 1
+stack add 4, now root 2
+stack add 5, now root 3
+root 1, v 3, now 5
+root 1, v 2, now 4
+stack add 6, now root 4
+stack add 7, now root 5
+stack add 3, now root 6
+root 5, v 6, now 3
+stack add 2, now root 7
+root 5, v 7, now 2
+root 5, v 5, now 7
+2 3 7 
+root 4, v 4, now 6
+6 
+root 1, v 1, now 1
+5 4 1 
+scc [0, 1, 5, 5, 1, 1, 4, 5]
+visited [0, 1, 7, 6, 2, 3, 4, 5]
+3
+1 4 5 -1
+2 3 7 -1
+6 -1
+ */
 public class Main {
 	static int id, sccCnt; // id : 방문순서, sccCnt: scc의 개수
 	static ArrayList<Integer>[] graphs;
@@ -77,7 +111,7 @@ public class Main {
 				int top = stack.pollLast();
 				//System.out.print(top+" ");
 				pq.add(top);
-				scc[top] = sccCnt;
+				scc[top] = root;
 				if(top == now) break;
 			}
 			//System.out.println();
