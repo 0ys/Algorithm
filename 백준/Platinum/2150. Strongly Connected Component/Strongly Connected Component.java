@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int id, sccCnt=0; // id : 방문순서, sccCnt: scc의 개수
+	static int id, sccCnt; // id : 방문순서, sccCnt: scc의 개수
 	static ArrayList<Integer>[] graphs;
 	static int[] scc; // 각 정점의 scc 번호
 	static int[] visited; // DFS 방문 순서
@@ -21,8 +21,6 @@ public class Main {
 		graphs = new ArrayList[V+1];
 		for(int i=1; i<=V; i++) {
 			graphs[i] = new ArrayList<>();
-			visited[i] = -1;
-			scc[i] = -1;
 		}
 		
 		for(int i=0; i<E; i++) {
@@ -34,7 +32,7 @@ public class Main {
 		}
 		
 		for(int i=1; i<=V; i++) {
-			if(visited[i] == -1) { // 한번도 방문하지 않은 노드 탐색
+			if(visited[i] == 0) { // 한번도 방문하지 않은 노드 탐색
 				SCC(i);
 			}
 		}
@@ -58,15 +56,15 @@ public class Main {
 	// visited에는 DFS 방문 순서인 id가 순서대로 들어간다.
 	// sccCnt에는 sccCnt를 세서 각 scc의 넘버가 들어간다.
 	static int SCC(int now) {
-		visited[now] = id++;
+		visited[now] = ++id;
 		stack.addLast(now);
 		int root = visited[now]; // root = 가장 먼저 방문된 노드
 		//System.out.println("stack add "+now+", now root "+root);
 		
 		for(int next : graphs[now]) {
-			if(visited[next] == -1) { // 방문하지 않은 노드는 DFS 탐색
+			if(visited[next] == 0) { // 방문하지 않은 노드는 DFS 탐색
 				root = Math.min(root, SCC(next));
-			} else if(scc[next] == -1) {
+			} else if(scc[next] == 0) {
 				// 이미 방문한 노드라면 해당 DFS의 루트와 현재 now 노드의 루트를 비교함
 				root = Math.min(root, visited[next]);
 			}
@@ -74,6 +72,7 @@ public class Main {
 		//System.out.println("root "+root+", v "+visited[now]+", now "+now);
 		if(root == visited[now]) {
 			Queue<Integer> pq = new PriorityQueue<>();
+			++sccCnt;
 			while(true) {
 				int top = stack.pollLast();
 				//System.out.print(top+" ");
@@ -83,7 +82,6 @@ public class Main {
 			}
 			//System.out.println();
 			result.add(pq);
-			sccCnt++;
 		}
 		
 		return root;
