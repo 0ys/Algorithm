@@ -1,25 +1,27 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
+/* 반례
+10
+9 8 7 6 5 1 2 3 4 5
+8
+1 3 5 7 9 6 5 4
+*/
 public class Main {
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        // 첫 번째 배열 입력
-        int n = sc.nextInt();
-        List<Integer> a = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            a.add(sc.nextInt());
+    static int N, M;
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        ArrayList<Integer> A = new ArrayList<>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++) {
+            A.add(Integer.parseInt(st.nextToken())); // 1 9 7 3
         }
-
-        // 두 번째 배열 입력
-        int m = sc.nextInt();
-        List<Integer> b = new ArrayList<>();
-        for (int i = 0; i < m; i++) {
-            b.add(sc.nextInt());
+        M = Integer.parseInt(br.readLine());
+        ArrayList<Integer> B = new ArrayList<>();
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<M; i++) {
+            B.add(Integer.parseInt(st.nextToken())); // 1 8 7 5 3
         }
 
         boolean flag = true;
@@ -29,20 +31,20 @@ public class Main {
         while (true) {
             // 각 수열의 최대 공통 값을 찾음
             while (true) {
-                if (a.isEmpty() || b.isEmpty()) {
+                if (A.isEmpty() || B.isEmpty()) {
                     flag = false;
                     break;
                 }
 
                 // 최대값과 인덱스 찾기
-                max_a = Collections.max(a);
-                a_idx = a.indexOf(max_a);
-                max_b = Collections.max(b);
-                b_idx = b.indexOf(max_b);
+                max_a = Collections.max(A);
+                a_idx = A.indexOf(max_a);
+                max_b = Collections.max(B);
+                b_idx = B.indexOf(max_b);
 
                 if (max_a == max_b) break;  // 공통된 최대값을 찾음
-                else if (max_a > max_b) a.remove(a_idx);  // a에서 최대값 제거
-                else b.remove(b_idx);  // b에서 최대값 제거
+                else if (max_a > max_b) A.remove(a_idx);  // a에서 최대값 제거
+                else B.remove(b_idx);  // b에서 최대값 제거
             }
 
             if (!flag) break;
@@ -51,11 +53,11 @@ public class Main {
             ans.add(max_a);
 
             // 최댓값보다 작은 인덱스의 값들을 제거 (두 배열 모두)
-            List<Integer> newA = new ArrayList<>(a.subList(a_idx + 1, a.size()));
-            a = newA;
+            ArrayList<Integer> newA = new ArrayList<>(A.subList(a_idx + 1, A.size()));
+            A = newA;
 
-            List<Integer> newB = new ArrayList<>(b.subList(b_idx + 1, b.size()));
-            b = newB;
+            ArrayList<Integer> newB = new ArrayList<>(B.subList(b_idx + 1, B.size()));
+            B = newB;
         }
 
         // 결과 출력
@@ -67,5 +69,7 @@ public class Main {
         } else {
             System.out.println(0);
         }
+
     }
+
 }
