@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Solution {
@@ -17,14 +16,12 @@ public class Solution {
 			K = Integer.parseInt(br.readLine());
 			magnet = new int[5][8];
 			
-			
 			for(int i=1; i<=4; i++) {
 				st = new StringTokenizer(br.readLine());
 				for(int j=0; j<8; j++) {
 					magnet[i][j] = Integer.parseInt(st.nextToken()); // N극=0, S극=1
 				}
 			}
-			
 			
 			red = new int[5];
 			
@@ -94,13 +91,10 @@ public class Solution {
 		}
 	}
 	
-	
 	private static int getIdx(int idx) {
-		int newIdx = idx;
-		if(idx > 7) newIdx = idx - 8;
-		else if(idx < 0) newIdx = 8 + idx;
-		
-		return newIdx;
+		if(idx > 7) return idx - 8;
+		else if(idx < 0) return 8 + idx;
+		return idx;
 	}
 
 }
