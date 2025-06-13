@@ -6,33 +6,35 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        PriorityQueue<Integer> ans = new PriorityQueue<>();
-        Set<Integer> setA = new HashSet<>();
+        List<Integer> ans = new ArrayList<>();
         Set<Integer> setB = new HashSet<>();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         int A = Integer.parseInt(st.nextToken());
         int B = Integer.parseInt(st.nextToken());
 
+        int[] arrA = new int[A];
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < A; i++) {
-            int a = Integer.parseInt(st.nextToken());
-            setA.add(a);
+            arrA[i] = Integer.parseInt(st.nextToken());
         }
 
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < B; i++) {
-            int b = Integer.parseInt(st.nextToken());
-            setB.add(b);
+            setB.add(Integer.parseInt(st.nextToken()));
         }
 
-        for(int now : setA){
-            if(!setB.contains(now)){ans.add(now);}
+        for(int num : arrA){
+            if(!setB.contains(num)){ans.add(num);}
         }
 
-        System.out.println(ans.toArray().length);
-        while(!ans.isEmpty()){
-            System.out.print(ans.poll()+" ");
+        Collections.sort(ans);
+
+        System.out.println(ans.size());
+        if(!ans.isEmpty()){
+            for(int num : ans){
+                System.out.print(num+" ");
+            }
         }
     }
 }
