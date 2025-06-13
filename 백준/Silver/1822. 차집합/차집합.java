@@ -32,9 +32,11 @@ public class Main {
 
         System.out.println(ans.size());
         if(!ans.isEmpty()){
+            StringBuilder sb = new StringBuilder();
             for(int num : ans){
-                System.out.print(num+" ");
+                sb.append(num).append(" ");
             }
+            System.out.println(sb);
         }
     }
 }
