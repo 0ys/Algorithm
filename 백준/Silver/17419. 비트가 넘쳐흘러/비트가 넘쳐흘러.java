@@ -6,16 +6,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        String bitStr = br.readLine();
-        int bit = Integer.parseInt(bitStr, 2);
+        char[] bitStr = br.readLine().toCharArray();
 
         int cnt = 0;
-        while(bit != 0){
-            bit = bit-(bit&((~bit)+1));
-            cnt++;
+        for(char c : bitStr){
+            if(c == '1') cnt++;
         }
-
-//        System.out.println(bit);
         System.out.println(cnt);
     }
 }
